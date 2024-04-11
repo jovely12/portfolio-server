@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const expressSanitizer = require("express-sanitizer");
 const path = require('path');
 const app = express();
 const cors = require('cors');
@@ -34,7 +33,6 @@ app.use(express.urlencoded({ extended: false }));
 // built-in middleware for json
 app.use(express.json());
 app.use(cookieParser());
-app.use(expressSanitizer());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
 //routes
