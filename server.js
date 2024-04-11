@@ -14,12 +14,6 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
-
-var helmet = require('helmet')
-app.use(helmet({
-  contentSecurityPolicy:false,
-}));
-
 // Connect to MongoDB
 connectDB();
 
@@ -56,16 +50,6 @@ app.use(verifyJWT);
 app.use('/product', require('./routes/api/products'));
 app.use('/users', require('./routes/api/users'));
 
-// fs and https 모듈 가져오기
-const https = require("https");
-const fs = require("fs");
-
-// certificate와 private key 가져오기
-// ------------------- STEP 2
-const options = {
-  key: fs.readFileSync("./config/cert.key"),
-  cert: fs.readFileSync("./config/cert.crt"),
-};
 
 app.all('*', (req, res) => {
 	res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
@@ -77,8 +61,5 @@ mongoose.connection.once('open', () => {
 	console.log('Connected to MongoDB');
 	// https 의존성으로 certificate와 private key로 새로운 서버를 시작
 	app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-	https.createServer(options, app).listen(8080, () => {
-		console.log(`HTTPS server started on port 8080`);
-	});
 });
 
