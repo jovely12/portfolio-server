@@ -14,6 +14,12 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
+
+var helmet = require('helmet')
+app.use(helmet({
+  contentSecurityPolicy:false,
+}));
+
 // Connect to MongoDB
 connectDB();
 
